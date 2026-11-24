@@ -1,0 +1,41 @@
+<%- include('partials/header', { titulo: titulo }) %>
+
+<div class="row justify-content-center">
+  <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h1 class="h4 text-center mb-4">Iniciar sesión</h1>
+
+        <!-- Error devuelto por la API o por la validación del formulario -->
+        <% if (error) { %>
+          <div class="alert alert-danger" role="alert"><%= error %></div>
+        <% } %>
+
+        <!-- POST a /login: los datos viajan en el cuerpo, no en la URL -->
+        <!-- novalidate: desactivamos la validación nativa para usar la nuestra (validar-formularios.js) -->
+        <form action="/login" method="POST" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email"
+                   value="<%= email %>" required maxlength="100" autofocus>
+            <div class="invalid-feedback">Ingresá un email válido.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   required minlength="6">
+            <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        </form>
+      </div>
+    </div>
+    <p class="text-center text-muted small mt-3">
+      Demo: admin@demo.com / Admin123 &middot; operador@demo.com / Operador123
+    </p>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

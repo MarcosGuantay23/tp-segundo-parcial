@@ -1,0 +1,14 @@
+# Dependencias instaladas
+node_modules/
+
+# Variables de entorno reales (credenciales). NUNCA subirlas a Git.
+.env
+
+# Fotos subidas por los usuarios: no se versionan (se guardan en Cloudinary en la nube).
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/

@@ -1,0 +1,10 @@
+# Dependencias instaladas (se regeneran con "npm install")
+node_modules/
+
+# Variables de entorno reales: contienen credenciales. NUNCA subirlas a Git.
+.env
+
+# Archivos generados por el sistema operativo / editor
+.DS_Store
+Thumbs.db
+.vscode/

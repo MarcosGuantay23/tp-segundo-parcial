@@ -1,0 +1,73 @@
+<%- include('partials/header', { titulo: titulo }) %>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+  <div>
+    <h1 class="h3 mb-0">Hola, <%= usuario.nombre %></h1>
+    <p class="text-muted mb-0">Panel principal del sistema de gestión</p>
+  </div>
+</div>
+
+<!-- Tarjetas de resumen: se apilan en celular y se ubican en fila en pantallas grandes -->
+<div class="row g-3 mb-4">
+  <div class="col-12 col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <p class="text-muted mb-1">Productos registrados</p>
+        <p class="display-6 fw-bold mb-0"><%= totalProductos %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body">
+        <p class="text-muted mb-1">Tu perfil</p>
+        <p class="h4 mb-0"><%= usuario.perfil %></p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body d-flex flex-column justify-content-center">
+        <a class="btn btn-primary mb-2" href="/productos/nuevo">Cargar producto</a>
+        <% if (usuario.perfil === 'Administrador') { %>
+          <a class="btn btn-outline-secondary" href="/usuarios">Administrar usuarios</a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Últimos productos cargados -->
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white d-flex justify-content-between align-items-center">
+    <span class="fw-semibold">Últimos productos</span>
+    <a href="/productos" class="btn btn-sm btn-outline-primary">Ver todos</a>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Código</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Categoría</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (ultimos.length === 0) { %>
+          <tr><td colspan="4" class="text-center text-muted py-4">Todavía no hay productos.</td></tr>
+        <% } %>
+        <% ultimos.forEach(function(p) { %>
+          <tr>
+            <td><a href="/productos/<%= p._id %>"><%= p.codigo %></a></td>
+            <td><%= p.marca %></td>
+            <td><%= p.modelo %></td>
+            <td><%= p.categoria %></td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

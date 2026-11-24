@@ -1,0 +1,43 @@
+#!/usr/bin/env node
+// =====================================================================
+// bin/www - ARRANQUE del servidor de la aplicación MVC
+// ---------------------------------------------------------------------
+// 1) Conecta a MongoDB (tp_negocio).
+// 2) Solo si la conexión fue exitosa, abre el puerto HTTP.
+// Así nunca se atienden solicitudes sin base de datos.
+// =====================================================================
+
+require('dotenv').config();
+
+const http = require('http');
+const app = require('../app');
+const conectarBD = require('../config/database');
+
+// Puerto: variable PORT (Render la define) o 3001 por defecto.
+// 3000 queda reservado para la API REST de usuarios.
+const port = normalizarPuerto(process.env.PORT || '3001');
+app.set('port', port);
+
+async function iniciar() {
+  try {
+    await conectarBD();
+
+    const server = http.createServer(app);
+    server.listen(port, () => {
+      console.log(`[App MVC] Servidor escuchando en http://localhost:${port}`);
+    });
+  } catch (error) {
+    console.error('[App MVC] No se pudo iniciar:', error.message);
+    process.exit(1);
+  }
+}
+
+// Convierte el puerto a número. Si no es válido, lo devuelve tal cual (pipe/socket).
+function normalizarPuerto(valor) {
+  const numero = parseInt(valor, 10);
+  if (isNaN(numero)) return valor;
+  if (numero >= 0) return numero;
+  return false;
+}
+
+iniciar();

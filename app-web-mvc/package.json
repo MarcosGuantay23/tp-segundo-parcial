@@ -1,0 +1,25 @@
+{
+  "name": "app-web-mvc",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "node --watch ./bin/www",
+    "seed": "node scripts/seed-productos.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^18.0.10",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "express-session": "^1.19.0",
+    "http-errors": "~1.6.3",
+    "mongoose": "^9.12.1",
+    "morgan": "~1.9.1",
+    "multer": "^2.5.0"
+  },
+  "engines": {
+    "node": ">=18.11.0"
+  }
+}

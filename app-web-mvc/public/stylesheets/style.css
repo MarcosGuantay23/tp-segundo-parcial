@@ -1,0 +1,35 @@
+/* =====================================================================
+   style.css - Estilos propios (complementan Bootstrap 5)
+   ===================================================================== */
+
+/* Miniatura de la tabla de productos: tamaño fijo y recorte de la imagen. */
+.foto-miniatura {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+}
+
+/* Vista previa en el formulario de producto. */
+.foto-form {
+  width: 100%;
+  max-width: 220px;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Foto grande en la página de detalle. */
+.foto-detalle {
+  max-height: 360px;
+  object-fit: contain;
+}
+
+/* Las tablas en celular se desplazan horizontalmente (ya lo hace .table-responsive). */
+table td,
+table th {
+  white-space: nowrap;
+}
+
+/* Permite que la descripción larga sí haga salto de línea. */
+.card p {
+  overflow-wrap: anywhere;
+}

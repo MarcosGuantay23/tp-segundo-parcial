@@ -1,0 +1,40 @@
+<%- include('../partials/header', { titulo: titulo }) %>
+
+<div class="mb-3">
+  <a href="/productos" class="small">&larr; Volver al listado</a>
+</div>
+
+<div class="card border-0 shadow-sm">
+  <div class="row g-0">
+    <div class="col-12 col-md-5 p-3 d-flex align-items-center justify-content-center bg-light">
+      <img src="<%= producto.imagenUrl %>" alt="Foto de <%= producto.modelo %>" class="img-fluid rounded foto-detalle">
+    </div>
+    <div class="col-12 col-md-7 p-4">
+      <p class="text-muted small mb-1">Código <%= producto.codigo %></p>
+      <h1 class="h3 mb-1"><%= producto.marca %> <%= producto.modelo %></h1>
+      <span class="badge bg-info text-dark mb-3"><%= producto.categoria %></span>
+
+      <p class="display-6 fw-bold mb-3">$ <%= Number(producto.precio).toLocaleString('es-AR') %></p>
+
+      <h2 class="h6 text-uppercase text-muted">Descripción</h2>
+      <p><%= producto.descripcion || 'Sin descripción.' %></p>
+
+      <p class="small text-muted mb-4">
+        Cargado: <%= new Date(producto.createdAt).toLocaleString('es-AR') %>
+        <% if (producto.updatedAt && producto.updatedAt !== producto.createdAt) { %>
+          &middot; Última modificación: <%= new Date(producto.updatedAt).toLocaleString('es-AR') %>
+        <% } %>
+      </p>
+
+      <div class="d-flex flex-wrap gap-2">
+        <a href="/productos/<%= producto._id %>/editar" class="btn btn-primary">Modificar</a>
+        <!-- Baja: POST con confirmación previa -->
+        <form action="/productos/<%= producto._id %>/eliminar" method="POST" data-confirm="¿Eliminar el producto <%= producto.codigo %>? Se borrará también su foto.">
+          <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

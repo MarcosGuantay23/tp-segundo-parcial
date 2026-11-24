@@ -1,0 +1,14 @@
+<%- include('partials/header', { titulo: titulo }) %>
+
+<div class="text-center py-5">
+  <h1 class="display-5 fw-bold">Ups, algo salió mal</h1>
+  <p class="lead"><%= message %></p>
+  <a href="/" class="btn btn-primary mt-3">Volver al inicio</a>
+
+  <!-- Detalle técnico solo en desarrollo (error.stack vacío en producción) -->
+  <% if (error && error.stack) { %>
+    <pre class="text-start small bg-light p-3 mt-4 rounded"><%= error.stack %></pre>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

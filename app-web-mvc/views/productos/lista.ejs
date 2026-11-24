@@ -1,0 +1,80 @@
+<%- include('../partials/header', { titulo: titulo }) %>
+
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+  <div>
+    <h1 class="h3 mb-0">Productos</h1>
+    <p class="text-muted mb-0 small">Gestión del catálogo</p>
+  </div>
+  <a href="/productos/nuevo" class="btn btn-primary">+ Nuevo producto</a>
+</div>
+
+<!--
+  Buscador DINÁMICO: no hay botón "Buscar". El script buscador-productos.js
+  escucha lo que escribís y pide los resultados con fetch() a /productos/api/buscar,
+  luego reemplaza las filas de la tabla sin recargar la página.
+  El formulario sirve como respaldo si JavaScript está deshabilitado.
+-->
+<form class="card card-body border-0 shadow-sm mb-3" action="/productos" method="GET" id="formBusqueda">
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-7">
+      <label for="buscador" class="form-label small mb-1">Buscar por código, marca, modelo o descripción</label>
+      <input type="search" class="form-control" id="buscador" name="q"
+             value="<%= filtros.q %>" placeholder="Ej.: Lenovo, Notebook, AB-12..." autocomplete="off">
+    </div>
+    <div class="col-12 col-md-3">
+      <label for="filtro-categoria" class="form-label small mb-1">Categoría</label>
+      <select class="form-select" id="filtro-categoria" name="categoria">
+        <option value="">Todas</option>
+        <% categorias.forEach(function(c) { %>
+          <option value="<%= c %>" <%= filtros.categoria === c ? 'selected' : '' %>><%= c %></option>
+        <% }) %>
+      </select>
+    </div>
+    <div class="col-12 col-md-2 d-grid">
+      <span class="small text-muted" id="contador"><%= productos.length %> resultado(s)</span>
+    </div>
+  </div>
+</form>
+
+<div class="card border-0 shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-hover align-middle mb-0">
+      <thead class="table-light">
+        <tr>
+          <th>Foto</th>
+          <th>Código</th>
+          <th>Marca</th>
+          <th>Modelo</th>
+          <th>Categoría</th>
+          <th class="text-end">Precio</th>
+          <th class="text-end">Acciones</th>
+        </tr>
+      </thead>
+      <!-- tbody con id: el script lo reconstruye con los resultados de la búsqueda -->
+      <tbody id="tabla-productos-body">
+        <% if (productos.length === 0) { %>
+          <tr id="fila-vacia"><td colspan="7" class="text-center text-muted py-4">No hay productos para mostrar.</td></tr>
+        <% } %>
+        <% productos.forEach(function(p) { %>
+          <tr>
+            <td><img src="<%= p.imagenUrl %>" alt="Foto de <%= p.modelo %>" class="foto-miniatura rounded"></td>
+            <td class="fw-semibold"><%= p.codigo %></td>
+            <td><%= p.marca %></td>
+            <td><%= p.modelo %></td>
+            <td><span class="badge bg-light text-dark border"><%= p.categoria %></span></td>
+            <td class="text-end">$ <%= Number(p.precio).toLocaleString('es-AR') %></td>
+            <td class="text-end text-nowrap">
+              <a class="btn btn-sm btn-outline-secondary" href="/productos/<%= p._id %>">Ver</a>
+              <a class="btn btn-sm btn-outline-primary" href="/productos/<%= p._id %>/editar">Editar</a>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Script propio de la búsqueda dinámica (Fetch API + async/await + DOM) -->
+<script src="/javascripts/buscador-productos.js"></script>
+
+<%- include('../partials/footer') %>
